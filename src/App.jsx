@@ -1,10 +1,13 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Today } from "./pages/Today.jsx";
+
 function App() {
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-purple-600">
-        ¡Tailwind funciona!
-      </h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Today />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 export default App
