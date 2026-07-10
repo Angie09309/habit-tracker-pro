@@ -3,8 +3,8 @@ export const initialDays = [
     fecha: "2023-06-01",
     animo: "feliz",
     habitos: [
-      { nombre: "leer", completado: false },
-      { nombre: "Ejercicio", completado: false },
+      { id: 1, name: "leer", completado: false },
+      { id: 2, name: "tomar agua", completado: false },
     ],
     notas: "",
     lugar: "",
@@ -14,8 +14,8 @@ export const initialDays = [
     fecha: "2026-07-08",
     animo: "triste",
     habitos: [
-      { nombre: "Leer", completado: true },
-      { nombre: "Ejercicio", completado: true },
+      { id: 1, name: "caminar", completado: true },
+      { id: 2, name: "Ejercicio", completado: true },
     ],
     notas: "",
     lugar: "",

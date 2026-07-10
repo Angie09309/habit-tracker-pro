@@ -1,5 +1,6 @@
 import { useHabits } from "../hooks/useHabits";
 import { initialDays } from "../data/initialData";
+import { HabitCard } from "../components/HabitCard";
 
 export function Today() {
 
@@ -8,11 +9,8 @@ export function Today() {
     return (
         <div className="p-4 bg-slate-900">{
             habits.map((habit) => (
-                <div key={habit.id}>
-                    {habit.name}
-                </div>
+                <HabitCard habit={habit} key={habit.id} />
             ))
-
         }</div>
     );
 }

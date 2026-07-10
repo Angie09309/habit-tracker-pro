@@ -1,14 +1,7 @@
 import { useState } from "react";
+import { initialDays } from "../data/initialData";
 
 export function useHabits() {
-  const [habits, setHabits] = useState([
-    {
-      id: 1,
-      name: "feliz",
-      emoji: "😄",
-      color: "#FF0000",
-      completed: false,
-    },
-  ]);
+  const [habits, setHabits] = useState(initialDays[0].habitos);
   return { habits };
 }
