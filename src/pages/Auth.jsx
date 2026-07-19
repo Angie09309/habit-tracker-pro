@@ -27,13 +27,19 @@ export function Auth() {
             <button onClick={() => setPagina("signin")}>Iniciar sesion</button>
 
             {pagina === "landing" && <div>Bienvenido </div>}
+
             {pagina === "signup" &&
                 <div>
+                    <input type="text" name="name" value={formData.name} onChange={handleInputChange} />
                     <input type="email" name="email" value={formData.email} onChange={handleInputChange} />
                     <input type="password" name="password" value={formData.password} onChange={handleInputChange} />
+                    <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} />
                 </div>}
-            {pagina === "signin" && <div>Formulario de inicio de sesion</div>}
 
+            {pagina === "signin" && <div>
+                <input type="email" name="email" value={formData.email} onChange={handleInputChange} />
+                <input type="password" name="password" value={formData.password} onChange={handleInputChange} />
+            </div>}
 
         </div>
 
