@@ -21,6 +21,30 @@ export function Auth() {
         )
     }
 
+    const [errors, setErrors] = useState("")
+
+    function handleSubmit(event) {
+        event.preventDefault()
+
+        let errorMessage = ""
+
+        if (formData.name.length < 3) {
+            errorMessage = "El nombre debe tener al menos 3 caracteres"
+        } else if (formData.email.length < 6) {
+            errorMessage = "El email. debe tener al menos 6 caracteres"
+        } else if (!formData.email.includes("@")) {
+            errorMessage = "El email debe incluir el carácter @"
+        } else if (formData.password.length < 6) {
+            errorMessage = "La contraseña es demasiado corta debe tener al menos 6 caracteres"
+        } else if (formData.password !== formData.confirmPassword) {
+            errorMessage = "Las contraseñas no coinciden"
+        }
+
+        setErrors(errorMessage)
+
+        if (errorMessage === "") { setPagina("dashboard") }
+    }
+
     return (
         <div>
             <button onClick={() => setPagina("signup")}>Crear cuenta</button>
@@ -29,18 +53,25 @@ export function Auth() {
             {pagina === "landing" && <div>Bienvenido </div>}
 
             {pagina === "signup" &&
-                <div>
+                <form onSubmit={handleSubmit}>
+
                     <input type="text" name="name" value={formData.name} onChange={handleInputChange} />
                     <input type="email" name="email" value={formData.email} onChange={handleInputChange} />
                     <input type="password" name="password" value={formData.password} onChange={handleInputChange} />
                     <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleInputChange} />
-                </div>}
+
+                    {errors && <div>{errors}</div>}
+
+                    <button type="submit">Enviar</button>
+
+                </form>
+            }
 
             {pagina === "signin" && <div>
                 <input type="email" name="email" value={formData.email} onChange={handleInputChange} />
                 <input type="password" name="password" value={formData.password} onChange={handleInputChange} />
             </div>}
-
+            {pagina === "dashboard" && <div>Dashboard</div>}
         </div>
 
     )
