@@ -56,7 +56,10 @@ export function Auth() {
 
         errorMessage = validateEmail(formData.email);
 
-        if (errorMessage === "") { errorMessage = validatePassword(formData.password, formData.confirmPassword) }
+        if (errorMessage === "") {
+            const confirmParam = pagina === "signup" ? formData.confirmPassword : undefined;
+            errorMessage = validatePassword(formData.password, confirmParam)
+        }
 
         if (errorMessage === "" && pagina === "signup") {
             if (formData.name.length < 3) {
