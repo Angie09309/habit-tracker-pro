@@ -1,3 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Fondos */
+  --color-background: #12111a;
+  --color-surface: #1e1c2e;
+  --color-surface-2: #252338;
+
+  /* Acentos */
+  --color-accent: #c4b5fd;
+  --color-accent-rose: #fca5a5;
+  --color-accent-blue: #93c5fd;
+  --color-accent-mint: #6ee7b7;
+
+  /* Texto */
+  --color-text-primary: #f1eff9;
+  --color-text-secondary: #9b97b2;
+
+  /* Bordes */
+  --color-border: #2e2b45;
+}
