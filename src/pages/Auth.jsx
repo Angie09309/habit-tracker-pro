@@ -4,28 +4,48 @@ import { useNavigate } from "react-router-dom";
 function validateEmail(email) {
 
     if (email.length < 6) {
-        return "El email. debe tener al menos 6 caracteres"
+        return {
+            message: "El email. debe tener al menos 6 caracteres",
+            field: "email"
+        }
     }
 
     if (!email.includes("@")) {
-        return "El email debe incluir el carácter @"
+        return {
+            message: "El email debe incluir el carácter @",
+            field: "email"
+        }
     }
-    return ""
+    return null
 }
 
 
 function validatePassword(password, confirmPassword) {
     if (password.length < 6) {
-        return "La contraseña es demasiado corta debe tener al menos 6 caracteres"
+        return {
+            message: "La contraseña es demasiado corta debe tener al menos 6 caracteres",
+            field: "password"
+        }
     }
 
     if (confirmPassword !== undefined && password !== confirmPassword) {
-        return "Las contraseñas no coinciden"
+        return {
+            message: "Las contraseñas no coinciden",
+            field: "confirmPassword"
+        }
     }
-    return ""
+    return null
+}
+
+const initialFormData = {
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
 }
 
 export function Auth() {
+
     const nameRef = useRef(null)
     const emailRef = useRef(null)
     const passwordRef = useRef(null)
@@ -35,12 +55,7 @@ export function Auth() {
 
     const [pagina, setPagina] = useState("landing")
 
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
-    })
+    const [formData, setFormData] = useState(initialFormData)
 
     function handleInputChange(event) {
         const fieldName = event.target.name
@@ -53,50 +68,69 @@ export function Auth() {
         )
     }
 
-    const [errors, setErrors] = useState("")
+    const [errors, setErrors] = useState(null)
 
     function handleSubmit(event) {
         event.preventDefault()
 
-        let errorMessage = ""
+        let error = null
 
-        errorMessage = validateEmail(formData.email);
+        error = validateEmail(formData.email);
 
-        if (errorMessage !== "") {
+        if (error && error.field === "email") {
             emailRef.current.focus();
         }
 
-        if (errorMessage === "") {
+        if (!error) {
             const confirmParam = pagina === "signup" ? formData.confirmPassword : undefined;
-            errorMessage = validatePassword(formData.password, confirmParam)
-        }
+            error = validatePassword(formData.password, confirmParam)
 
-        if (errorMessage === "" && pagina === "signup") {
-            if (formData.name.length < 3) {
-                errorMessage = "El nombre debe tener al menos 3 caracteres";
+            if (error && error.field === "password") {
+                passwordRef.current.focus()
+            }
+
+            if (error && error.field === "confirmPassword") {
+                confirmPasswordRef.current.focus()
             }
         }
 
-        setErrors(errorMessage)
+        if (!error && pagina === "signup") {
+            if (formData.name.length < 3) {
+                error = {
+                    message: "El nombre debe tener al menos 3 caracteres",
+                    field: "name"
+                }
+                nameRef.current.focus();
+            }
+        }
 
-        if (errorMessage === "") navigate("/dashboard")
-    }
-
-    const initialFormData = {
-        name: "", email: "", password: "", confirmPassword: ""
+        setErrors(error)
+        if (error === null) navigate("/dashboard")
     }
 
     const handleBack = () => {
         setPagina("landing")
-        setErrors("")
+        setErrors(null)
         setFormData(initialFormData);
     }
 
     return (
         <div>
+            <button
+                onClick={() => {
+                    setPagina("signup");
+                    setErrors(null);
+                }}>
+                Crear cuenta
+            </button>
 
-            <button onClick={() => setPagina("signup")}>Crear cuenta</button>
-            <button onClick={() => setPagina("signin")}>Iniciar sesion</button>
+            <button
+                onClick={() => {
+                    setPagina("signin");
+                    setErrors(null);
+                }}>
+                Iniciar sesión
+            </button>
 
             {pagina === "landing" && <div>Bienvenido </div>}
 
@@ -161,7 +195,7 @@ export function Auth() {
                         ref={confirmPasswordRef}
                     />
 
-                    {errors && <div role="alert" aria-live="assertive">{errors}</div>}
+                    {errors && (<div role="alert" aria-live="assertive">{errors.message}</div>)}
 
                     <button type="submit">Enviar</button>
 
