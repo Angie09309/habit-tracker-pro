@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function validateEmail(email) {
+
     if (email.length < 6) {
         return "El email. debe tener al menos 6 caracteres"
     }
@@ -25,6 +26,11 @@ function validatePassword(password, confirmPassword) {
 }
 
 export function Auth() {
+    const nameRef = useRef(null)
+    const emailRef = useRef(null)
+    const passwordRef = useRef(null)
+    const confirmPasswordRef = useRef(null)
+
     const navigate = useNavigate()
 
     const [pagina, setPagina] = useState("landing")
@@ -55,6 +61,10 @@ export function Auth() {
         let errorMessage = ""
 
         errorMessage = validateEmail(formData.email);
+
+        if (errorMessage !== "") {
+            emailRef.current.focus();
+        }
 
         if (errorMessage === "") {
             const confirmParam = pagina === "signup" ? formData.confirmPassword : undefined;
@@ -103,6 +113,7 @@ export function Auth() {
                         autoComplete="name"
                         aria-invalid={!!errors}
                         required
+                        ref={nameRef}
                     />
 
                     <label htmlFor="email">Correo electrónico: </label>
@@ -117,6 +128,7 @@ export function Auth() {
                         autoComplete="email"
                         aria-invalid={!!errors}
                         required
+                        ref={emailRef}
                     />
 
                     <label htmlFor="password">Contraseña: </label>
@@ -131,6 +143,7 @@ export function Auth() {
                         autoComplete="new-password"
                         aria-invalid={!!errors}
                         required
+                        ref={passwordRef}
                     />
 
                     <label htmlFor="confirmPassword">confirme la contraseña </label>
@@ -145,6 +158,7 @@ export function Auth() {
                         autoComplete="new-password"
                         aria-invalid={!!errors}
                         required
+                        ref={confirmPasswordRef}
                     />
 
                     {errors && <div role="alert" aria-live="assertive">{errors}</div>}
@@ -169,6 +183,7 @@ export function Auth() {
                         autoComplete="email"
                         aria-invalid={!!errors}
                         required
+                        ref={emailRef}
                     />
 
                     <label htmlFor="signin-password">Contraseña: </label>
@@ -183,6 +198,7 @@ export function Auth() {
                         autoComplete="current-password"
                         aria-invalid={!!errors}
                         required
+                        ref={passwordRef}
                     />
 
                     <button type="submit">Iniciar sesion</button>
