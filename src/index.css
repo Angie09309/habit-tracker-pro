@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -18,4 +19,10 @@
 
   /* Bordes */
   --color-border: #2e2b45;
+}
+
+body {
+  background-color: var(--color-background);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: var(--color-text-primary);
 }
