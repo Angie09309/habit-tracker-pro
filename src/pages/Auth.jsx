@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 
 
 function validateEmail(email) {
@@ -54,7 +54,7 @@ export function Auth() {
 
     const navigate = useNavigate()
 
-    const [pagina, setPagina] = useState("landing")
+    const [pagina, setPagina] = useState("signup")
 
     const [formData, setFormData] = useState(initialFormData)
 
@@ -110,13 +110,13 @@ export function Auth() {
     }
 
     const handleBack = () => {
-        setPagina("landing")
+        setPagina("signup")
         setErrors(null)
         setFormData(initialFormData);
     }
 
     return (
-        <div className="flex flex-col p-6 md:p-0 md:h-screen md:overflow-hidden">
+        <div className="flex flex-col p-6 md:p-0  ">
             <div className="max-w-7xl mx-auto w-full md:h-full md:flex md:flex-col md:px-6">
 
                 <header className="flex justify-between items-center py-4">
@@ -135,10 +135,10 @@ export function Auth() {
                 </header>
 
                 {/* Main content: hero section and authentication form */}
-                <main className="grid grid-cols-1 md:grid-cols-2 h-auto w-full">
+                <main className="grid grid-cols-1 md:grid-cols-2 w-full ">
 
                     {/* Hero section */}
-                    <div className="flex flex-col justify-center min-h-screen max-w-xl space-y-5  text-left">
+                    <div className="flex flex-col justify-center  max-w-xl space-y-5  text-left">
                         <h4 className="text-base text-accent">Habit Tracker</h4>
                         <h1 className="text-5xl font-black leading-tight">Diseña tu día con la disciplina de una rutina precisa.</h1>
                         <p className="text-lg text-text-secondary">Habit Tracker combina hábitos, estados de ánimo y notas contextuales en un solo espacio oscuro y profesional. Observa tu progreso sin distracción</p>
@@ -175,130 +175,114 @@ export function Auth() {
                     </div>
 
 
-
                     {/* Authentication form */}
-                    <div className={pagina !== "landing" ? "block" : "hidden md:block"} >
-                        <button
-                            onClick={() => {
-                                setPagina("signup");
-                                setErrors(null);
-                            }}>
-                            Crear cuenta
-                        </button>
+                    <div className="flex items-center justify-center">
+                        <div className="flex flex-col rounded-4xl border p-5 max-w-md   ">
 
-                        <button
-                            onClick={() => {
-                                setPagina("signin");
-                                setErrors(null);
-                            }}>
-                            Iniciar sesión
-                        </button>
+                            <div className="flex flex-row gap-2 justify-center bg-surface-2 rounded-4xl p-1 ">
+                                <button
+                                    className=" "
+                                    onClick={() => {
+                                        setPagina("signup");
+                                        setErrors(null);
+                                    }}>
+                                    REGISTRO
+                                </button>
 
-                        {pagina === "signup" &&
-                            <form onSubmit={handleSubmit}>
-                                <label htmlFor="name">Nombre completo: </label>
-                                <input
-                                    id="name"
-                                    name="name"
-                                    placeholder=" Ej. Ana García"
-                                    aria-label="Nombre completo"
-                                    type="text" value={formData.name}
-                                    onChange={handleInputChange}
-                                    autoComplete="name"
-                                    aria-invalid={!!errors}
-                                    required
-                                    ref={nameRef}
-                                />
+                                <button
+                                    onClick={() => {
+                                        setPagina("signin");
+                                        setErrors(null);
+                                    }}>
+                                    INGRESO
+                                </button>
+                            </div>
 
-                                <label htmlFor="email">Correo electrónico: </label>
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    placeholder="tu@correo.com"
-                                    aria-label="Correo electrónico"
-                                    value={formData.email}
-                                    onChange={handleInputChange}
-                                    autoComplete="email"
-                                    aria-invalid={!!errors}
-                                    required
-                                    ref={emailRef}
-                                />
 
-                                <label htmlFor="password">Contraseña: </label>
-                                <input
-                                    id="password"
-                                    name="password"
-                                    type="password"
-                                    placeholder="Mínimo 6 caracteres y una @"
-                                    aria-label="Contraseña"
-                                    value={formData.password}
-                                    onChange={handleInputChange}
-                                    autoComplete="new-password"
-                                    aria-invalid={!!errors}
-                                    required
-                                    ref={passwordRef}
-                                />
+                            <form onSubmit={handleSubmit} className="flex flex-col space-y-5" >
+                                <div className="flex flex-col">
+                                    {pagina === "signup" && <>
+                                        <label htmlFor="name">Nombre completo: </label>
+                                        <input
+                                            id="name"
+                                            name="name"
+                                            placeholder=" Ej. Ana García"
+                                            aria-label="Nombre completo"
+                                            type="text" value={formData.name}
+                                            onChange={handleInputChange}
+                                            autoComplete="name"
+                                            aria-invalid={!!errors}
+                                            required
+                                            ref={nameRef}
+                                        />
+                                    </>}
+                                </div>
+                                <div className="flex flex-col">
+                                    {pagina === "signup" && <>
+                                        <label htmlFor="confirmPassword">confirme la contraseña </label>
+                                        <input
+                                            id="confirmPassword"
+                                            name="confirmPassword"
+                                            type="password"
+                                            placeholder="Mínimo 6 caracteres y una @"
+                                            aria-label="Confirmar contraseña"
+                                            value={formData.confirmPassword}
+                                            onChange={handleInputChange}
+                                            autoComplete="new-password"
+                                            aria-invalid={!!errors}
+                                            required
+                                            ref={confirmPasswordRef}
+                                        />
+                                    </>
+                                    }
+                                </div>
+                                <div className="flex flex-col">
+                                    <label htmlFor="email">Correo electrónico: </label>
+                                    <input
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        placeholder="tu@correo.com"
+                                        aria-label="Correo electrónico"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
+                                        autoComplete="email"
+                                        aria-invalid={!!errors}
+                                        required
+                                        ref={emailRef}
+                                    />
+                                </div>
 
-                                <label htmlFor="confirmPassword">confirme la contraseña </label>
-                                <input
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    type="password"
-                                    placeholder="Mínimo 6 caracteres y una @"
-                                    aria-label="Confirmar contraseña"
-                                    value={formData.confirmPassword}
-                                    onChange={handleInputChange}
-                                    autoComplete="new-password"
-                                    aria-invalid={!!errors}
-                                    required
-                                    ref={confirmPasswordRef}
-                                />
+                                <div className="flex flex-col">
+                                    <label htmlFor="password">Contraseña: </label>
+                                    <input
+                                        id="password"
+                                        name="password"
+                                        type="password"
+                                        placeholder="··········"
+                                        value={formData.password}
+                                        onChange={handleInputChange}
+                                        autoComplete="new-password"
+                                        aria-invalid={!!errors}
+                                        required
+                                        ref={passwordRef}
+                                    />
+                                </div>
 
                                 {errors && (<div role="alert" aria-live="assertive">{errors.message}</div>)}
 
-                                <button type="submit">Enviar</button>
-
-                                <button type="button" onClick={handleBack}>Cancelar </button>
+                                <button
+                                    className=""
+                                    type="submit"
+                                >
+                                    {pagina === "signup"
+                                        ? "Crear cuenta"
+                                        : "Entrar"
+                                    }
+                                </button>
 
                             </form>
-                        }
-
-                        {pagina === "signin" &&
-                            <form onSubmit={handleSubmit}>
-                                <label htmlFor="signin-email">Correo electrónico: </label>
-                                <input
-                                    id="signin-email"
-                                    name="email" type="email"
-                                    placeholder="tu@correo.com"
-                                    aria-label="Correo electrónico"
-                                    value={formData.email}
-                                    onChange={handleInputChange}
-                                    autoComplete="email"
-                                    aria-invalid={!!errors}
-                                    required
-                                    ref={emailRef}
-                                />
-
-                                <label htmlFor="signin-password">Contraseña: </label>
-                                <input
-                                    id="signin-password"
-                                    name="password"
-                                    type="password"
-                                    placeholder="Mínimo 6 caracteres y una @"
-                                    aria-label="Contraseña"
-                                    value={formData.password}
-                                    onChange={handleInputChange}
-                                    autoComplete="current-password"
-                                    aria-invalid={!!errors}
-                                    required
-                                    ref={passwordRef}
-                                />
-
-                                <button type="submit">Iniciar sesion</button>
-
-                                <button type="button" onClick={handleBack}>Volver </button>
-                            </form>}
+                        </div>
                     </div>
                 </main>
             </div>
